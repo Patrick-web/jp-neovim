@@ -1,144 +1,124 @@
 return {
-    "neovim/nvim-lspconfig",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-        "hrsh7th/cmp-nvim-lsp",
-        { "antosha417/nvim-lsp-file-operations", config = true },
-        { "folke/neodev.nvim",                   opts = {} },
-    },
-    config = function()
-        -- import lspconfig plugin
-        local lspconfig = require("lspconfig")
+  "neovim/nvim-lspconfig",
+  event = { "BufReadPre", "BufNewFile" },
+  dependencies = {
+    "hrsh7th/cmp-nvim-lsp",
+    { "antosha417/nvim-lsp-file-operations", config = true },
+    { "folke/neodev.nvim", opts = {} },
+  },
+  config = function()
+    -- Import necessary plugins
+    local lspconfig = require "lspconfig"
+    local mason_lspconfig = require "mason-lspconfig"
+    local cmp_nvim_lsp = require "cmp_nvim_lsp"
+    local keymap = vim.keymap -- for conciseness
 
-        -- import mason_lspconfig plugin
-        local mason_lspconfig = require("mason-lspconfig")
+    -- Set up key mappings for LSP actions
+    vim.api.nvim_create_autocmd("LspAttach", {
+      group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+      callback = function(ev)
+        -- Buffer local mappings.
+        local opts = { buffer = ev.buf, silent = true }
 
-        -- import cmp-nvim-lsp plugin
-        local cmp_nvim_lsp = require("cmp_nvim_lsp")
+        -- Set keybinds
+        opts.desc = "Show LSP references"
+        keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts)
 
-        local keymap = vim.keymap -- for conciseness
+        opts.desc = "Go to declaration"
+        keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
 
-        vim.api.nvim_create_autocmd("LspAttach", {
-            group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-            callback = function(ev)
-                -- Buffer local mappings.
-                local opts = { buffer = ev.buf, silent = true }
+        opts.desc = "Show LSP definitions"
+        keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
 
-                -- set keybinds
-                opts.desc = "Show LSP references"
-                keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts)
+        opts.desc = "Show LSP implementations"
+        keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts)
 
-                opts.desc = "Go to declaration"
-                keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+        opts.desc = "Show LSP type definitions"
+        keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
 
-                opts.desc = "Show LSP definitions"
-                keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
+        opts.desc = "See available code actions"
+        keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
 
-                opts.desc = "Show LSP implementations"
-                keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts)
+        opts.desc = "Smart rename"
+        keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
 
-                opts.desc = "Show LSP type definitions"
-                keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
+        opts.desc = "Show buffer diagnostics"
+        keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts)
 
-                opts.desc = "See available code actions"
-                keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
+        opts.desc = "Show line diagnostics"
+        keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
 
-                opts.desc = "Smart rename"
-                keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+        opts.desc = "Go to previous diagnostic"
+        keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 
-                opts.desc = "Show buffer diagnostics"
-                keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts)
+        opts.desc = "Go to next diagnostic"
+        keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 
-                opts.desc = "Show line diagnostics"
-                keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
+        opts.desc = "Show documentation for what is under cursor"
+        keymap.set("n", "K", vim.lsp.buf.hover, opts)
 
-                opts.desc = "Go to previous diagnostic"
-                keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+        opts.desc = "Restart LSP"
+        keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts)
+      end,
+    })
 
-                opts.desc = "Go to next diagnostic"
-                keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+    -- Enable autocompletion capabilities
+    local capabilities = cmp_nvim_lsp.default_capabilities()
 
-                opts.desc = "Show documentation for what is under cursor"
-                keymap.set("n", "K", vim.lsp.buf.hover, opts)
+    -- Change the Diagnostic symbols in the sign column (gutter)
+    local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
+    for type, icon in pairs(signs) do
+      local hl = "DiagnosticSign" .. type
+      vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+    end
 
-                opts.desc = "Restart LSP"
-                keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts)
-            end,
-        })
-
-        -- used to enable autocompletion (assign to every lsp server config)
-        local capabilities = cmp_nvim_lsp.default_capabilities()
-
-        -- Change the Diagnostic symbols in the sign column (gutter)
-        local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-        for type, icon in pairs(signs) do
-            local hl = "DiagnosticSign" .. type
-            vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+    local function stop_other_servers(client)
+      local clients = vim.lsp.get_active_clients()
+      for _, c in ipairs(clients) do
+        if c.id ~= client.id then
+          c.stop() -- Stop other clients
         end
+      end
+    end
+    -- Mason LSP config handlers
+    mason_lspconfig.setup_handlers {
+      ["lua_ls"] = function()
+        lspconfig["lua_ls"].setup {
+          capabilities = capabilities,
+          settings = {
+            Lua = {
+              diagnostics = {
+                globals = { "vim" },
+              },
+              completion = {
+                callSnippet = "Replace",
+              },
+            },
+          },
+        }
+      end,
 
-        mason_lspconfig.setup_handlers({
-            -- default handler for installed servers
-            function(server_name)
-                -- Determine the root directory based on the presence of package.json or deno.json
-                local root_dir = lspconfig.util.root_pattern("package.json", "deno.json", "deno.jsonc")(vim.fn.getcwd())
+      ["denols"] = function()
+        lspconfig["denols"].setup {
+          capabilities = capabilities,
+          root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+          on_attach = function(client, bufnr)
+            -- vim.cmd "LspStop ts_ls"
+          end,
+        }
+      end,
 
-                -- Check if we should use deno_ls or tsserver
-                if server_name == "denols" then
-                    if root_dir and vim.fn.filereadable(root_dir .. "/deno.json") == 1 then
-                        lspconfig["denols"].setup({
-                            root_dir = root_dir,
-                            init_options = {
-                                lint = true,
-                                unstable = true,
-                                suggest = {
-                                    imports = {
-                                        hosts = {
-                                            ["https://deno.land"] = true,
-                                            ["https://cdn.nest.land"] = true,
-                                            ["https://crux.land"] = true,
-                                        },
-                                    },
-                                },
-                            },
-                            capabilities = capabilities,
-                        })
-                    else
-                        -- Prevent deno_ls from starting if not a Deno project
-                        return
-                    end
-                elseif server_name == "tsserver" then
-                    if root_dir and vim.fn.filereadable(root_dir .. "/package.json") == 1 then
-                        lspconfig["tsserver"].setup({
-                            root_dir = root_dir,
-                            single_file_support = false, -- Disable single file support to avoid issues
-                            capabilities = capabilities,
-                        })
-                    else
-                        -- Prevent tsserver from starting if not a TypeScript project
-                        return
-                    end
-                else
-                    -- Fallback to default setup for other servers
-                    lspconfig[server_name].setup({
-                        capabilities = capabilities,
-                    })
-                end
-            end,
-            ["lua_ls"] = function()
-                lspconfig["lua_ls"].setup({
-                    capabilities = capabilities,
-                    settings = {
-                        Lua = {
-                            diagnostics = {
-                                globals = { "vim" },
-                            },
-                            completion = {
-                                callSnippet = "Replace",
-                            },
-                        },
-                    },
-                })
-            end,
-        })
-    end,
+      ["ts_ls"] = function()
+        lspconfig["ts_ls"].setup {
+          capabilities = capabilities,
+          root_dir = lspconfig.util.root_pattern("tsconfig.json", "jsconfig.json", "package.json"),
+          single_file_support = false,
+          on_attach = function(client, bufnr)
+            -- Disable formatting from tsserver
+            client.server_capabilities.document_formatting = false
+          end,
+        }
+      end,
+    }
+  end,
 }
