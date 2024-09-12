@@ -25,7 +25,10 @@ return {
         lualine_a = { "mode" },
         lualine_b = { "branch", "diff", "diagnostics" },
         lualine_c = {
-          "filename",
+          {
+            "filename",
+            path = 1,
+          },
           { "lsp_progress", spinner_frames = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" } },
         },
         lualine_x = { "fileformat", "filetype" },
