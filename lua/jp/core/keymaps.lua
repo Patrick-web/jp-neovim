@@ -48,7 +48,7 @@ map("v", "<leader>/", "gc", { desc = "Toggle comment", remap = true })
 -- NvimTree Mappings
 -- ===========================
 map("n", "<leader>b", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle NvimTree" })
-map("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "Focus NvimTree" })
+map("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", { desc = "Focus NvimTree" })
 
 -- ===========================
 -- Telescope Mappings
@@ -65,8 +65,12 @@ map("n", "<leader>gt", "<cmd>Telescope git_status<CR>", { desc = "Telescope git 
 map("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "Telescope pick hidden term" })
 map("n", "<leader>th", "<cmd>Telescope themes<CR>", { desc = "Telescope NVChad themes" })
 map("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Telescope find files" })
-map("n", "<leader>fa", "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>",
-  { desc = "Telescope find all files" })
+map(
+  "n",
+  "<leader>fa",
+  "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>",
+  { desc = "Telescope find all files" }
+)
 map("n", "<leader>gr", "<cmd>Telescope lsp_references<CR>", { desc = "Telescope find all references" })
 map("n", "gr", "<cmd>Telescope lsp_references<CR>", { desc = "Telescope find all references" })
 map("n", "gh", "<cmd>lua vim.lsp.buf.hover()<CR>", { desc = "LSP hover information" })
@@ -135,19 +139,18 @@ map("n", "<leader>cc", function()
   end
 end, { desc = "Jump to current context in blankline" })
 
-
 -- ===========================
 -- Blankline Mappings
 -- ===========================
-map('n', '<leader>S', '<cmd>lua require("spectre").toggle()<CR>', {
-  desc = "Toggle Spectre"
+map("n", "<leader>S", '<cmd>lua require("spectre").toggle()<CR>', {
+  desc = "Toggle Spectre",
 })
-map('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
-  desc = "Search current word"
+map("n", "<leader>sw", '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
+  desc = "Search current word",
 })
-map('v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
-  desc = "Search current word"
+map("v", "<leader>sw", '<esc><cmd>lua require("spectre").open_visual()<CR>', {
+  desc = "Search current word",
 })
-map('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
-  desc = "Search on current file"
+map("n", "<leader>sp", '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
+  desc = "Search on current file",
 })
