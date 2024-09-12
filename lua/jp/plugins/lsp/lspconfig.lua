@@ -72,14 +72,6 @@ return {
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
     end
 
-    local function stop_other_servers(client)
-      local clients = vim.lsp.get_active_clients()
-      for _, c in ipairs(clients) do
-        if c.id ~= client.id then
-          c.stop() -- Stop other clients
-        end
-      end
-    end
     -- Mason LSP config handlers
     mason_lspconfig.setup_handlers {
       ["lua_ls"] = function()
