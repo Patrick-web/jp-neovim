@@ -104,11 +104,33 @@ return {
         lspconfig["ts_ls"].setup {
           capabilities = capabilities,
           root_dir = lspconfig.util.root_pattern("tsconfig.json", "jsconfig.json", "package.json"),
+          filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
           single_file_support = false,
           on_attach = function(client, bufnr)
             -- Disable formatting from tsserver
             client.server_capabilities.document_formatting = false
           end,
+        }
+      end,
+      ["volar"] = function()
+        require("lspconfig").volar.setup {
+          root_dir = require("lspconfig").util.root_pattern(
+            "vue.config.js",
+            "vue.config.ts",
+            "nuxt.config.js",
+            "nuxt.config.ts",
+            "vite.config.ts",
+            "vite.config.js"
+          ),
+          filetypes = { "vue", "javascript", "typescript" },
+          init_options = {
+            vue = {
+              hybridMode = false,
+            },
+            typescript = {
+              tsdk = vim.fn.getcwd() .. "/node_modules/typescript/lib",
+            },
+          },
         }
       end,
     }
