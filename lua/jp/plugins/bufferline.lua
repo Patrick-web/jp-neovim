@@ -1,35 +1,33 @@
 return {
-  'akinsho/bufferline.nvim',
+  "akinsho/bufferline.nvim",
   version = "*",
-  dependencies = 'nvim-tree/nvim-web-devicons',
-  options = {
-    long_message_to_split = true, -- long messages will be sent to a split
-    inc_rename = false,           -- enables an input dialog for inc-rename.nvim
-    lsp_doc_border = false,       -- add a border to hover docs and signature help
-    style_preset = "default",     -- tabline style preset
-    offsets = {
-      {
-        filetype = "NvimTree", -- Adjust this based on your file explorer
-        text = "File Explorer",
-        text_align = "center",
-        separator = true,
-        padding = 1, -- Adjust this value to increase spacing
+  dependencies = { "nvim-tree/nvim-web-devicons" }, -- Use a table for dependencies
+  config = function() -- Configuration function
+    local bufferline = require "bufferline"
+    require("bufferline").setup {
+      options = {
+        offsets = {
+          {
+            filetype = "NvimTree",
+            text = "File Explorer",
+            separator = true,
+          },
+        },
+        sort_by = "insert_after_current",
+        show_close_icon = false,
+        show_buffer_close_icons = false,
+        themable = true,
+        separator_style = "slope",
+        tab_separator = {
+          fg = "#000000",
+          bg = "#000000",
+        },
+        diagnostics = "nvim_lsp",
+        diagnostics_indicator = function(count, level)
+          local icon = level:match "error" and " " or ""
+          return " " .. icon .. count
+        end,
       },
-    },
-    separator_style = "slant", -- Choose your preferred separator style
-    always_show_bufferline = true,
-    diagnostics = "nvim_lsp",
-    diagnostics_indicator = function(count, level)
-      local icon = level:match("error") and " " or ""
-      return " " .. icon .. count
-    end
-  },
-  highlights = {
-    separator = {
-      thick = true
-    },
-    buffer_selected = {
-      bold = true,
-    },
-  },
+    }
+  end,
 }
