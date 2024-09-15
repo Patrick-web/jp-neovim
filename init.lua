@@ -5,3 +5,4 @@ vim.api.nvim_create_user_command("W", "write", { bang = true, desc = "Save curre
 require "jp.core"
 require "jp.lazy"
 require "current-theme"
+require "jp.autocommands"
