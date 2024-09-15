@@ -21,6 +21,18 @@ map("n", "<C-S-Right>", "<C-w>l", { desc = "Switch window right" })
 map("n", "<C-S-Down>", "<C-w>j", { desc = "Switch window down" })
 map("n", "<C-S-Up>", "<C-w>k", { desc = "Switch window up" })
 
+-- Change Window Size with Alt + Arrow Keys
+map("n", "<A-Up>", ":resize +2<CR>", { desc = "Increase window height" })
+map("n", "<A-Down>", ":resize -2<CR>", { desc = "Decrease window height" })
+map("n", "<A-Left>", ":vertical resize -2<CR>", { desc = "Decrease window width" })
+map("n", "<A-Right>", ":vertical resize +2<CR>", { desc = "Increase window width" })
+
+-- Toggle Terminal
+map("n", "<leader>tt", "<cmd>toggleterm<CR>", { desc = "Toggle terminal" })
+map("n", "<leader>tf", "<cmd>ToggleTerm direction=float<CR>", { desc = "Toggle floating terminal" })
+map("n", "<leader>th", "<cmd>ToggleTerm direction=horizontal<CR>", { desc = "Toggle horizontal terminal" })
+map("n", "<leader>tv", "<cmd>ToggleTerm direction=vertical<CR>", { desc = "Toggle vertical terminal" })
+
 -- General Commands
 map("n", "<Esc>", "<cmd>noh<CR>", { desc = "Clear highlights" })
 map("n", "<C-s>", "<cmd>w<CR>", { desc = "Save file" })
@@ -63,7 +75,7 @@ map("n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = 
 map("n", "<leader>cm", "<cmd>Telescope git_commits<CR>", { desc = "Telescope find git commits" })
 map("n", "<leader>gt", "<cmd>Telescope git_status<CR>", { desc = "Telescope git status" })
 map("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "Telescope pick hidden term" })
-map("n", "<leader>th", "<cmd>Telescope themes<CR>", { desc = "Telescope NVChad themes" })
+-- map("n", "<leader>th", "<cmd>Telescope themes<CR>", { desc = "Telescope NVChad themes" })
 map("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Telescope find files" })
 map(
   "n",
@@ -82,34 +94,6 @@ map("n", "A", "<cmd>lua vim.lsp.buf.code_action()<CR>", { desc = "LSP code actio
 map("n", "D", vim.diagnostic.open_float, { desc = "LSP diagnostic loclist" })
 
 map("n", "<leader>tr", "<cmd>Telescope resume<CR>", { desc = "Telescope resume last search" })
-
--- ===========================
--- Terminal Mappings
--- ===========================
-map("t", "<C-x>", "<C-\\><C-N>", { desc = "Escape terminal mode" })
-
--- New Terminals
-map("n", "<leader>t", ":terminal<CR>", { desc = "New terminal commands" })
-map("n", "<leader>th", function()
-  require("nvchad.term").new { pos = "sp" }
-end, { desc = "New horizontal terminal" })
-
-map("n", "<leader>tv", function()
-  require("nvchad.term").new { pos = "vsp" }
-end, { desc = "New vertical terminal" })
-
--- Toggleable Terminals
-map({ "n", "t" }, "<A-v>", function()
-  require("nvchad.term").toggle { pos = "vsp", id = "vtoggleTerm" }
-end, { desc = "Toggle vertical terminal" })
-
-map({ "n", "t" }, "<A-h>", function()
-  require("nvchad.term").toggle { pos = "sp", id = "htoggleTerm" }
-end, { desc = "Toggle horizontal terminal" })
-
-map({ "n", "t" }, "<A-i>", function()
-  require("nvchad.term").toggle { pos = "float", id = "floatTerm" }
-end, { desc = "Toggle floating terminal" })
 
 -- ===========================
 -- WhichKey Mappings
