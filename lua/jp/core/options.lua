@@ -60,8 +60,10 @@ local sep = is_windows and "\\" or "/"
 local delim = is_windows and ";" or ":"
 vim.env.PATH = table.concat({ vim.fn.stdpath "data", "mason", "bin" }, sep) .. delim .. vim.env.PATH
 
+-- Exit from insert mode by Esc in Terminal
+vim.api.nvim_set_keymap("t", "<Esc>", [[<C-\><C-n>]], { noremap = true, silent = true })
 
-vim.api.nvim_create_user_command('Q', 'quit', { bang = true, desc = 'Quit Neovim' })
-vim.api.nvim_create_user_command('Qa', 'qa', { bang = true, desc = 'Quit all Neovim windows' })
-vim.api.nvim_create_user_command('W', 'write', { bang = true, desc = 'Save current buffer' })
+vim.api.nvim_create_user_command("Q", "quit", { bang = true, desc = "Quit Neovim" })
+vim.api.nvim_create_user_command("Qa", "qa", { bang = true, desc = "Quit all Neovim windows" })
+vim.api.nvim_create_user_command("W", "write", { bang = true, desc = "Save current buffer" })
 vim.g.mapleader = " "
