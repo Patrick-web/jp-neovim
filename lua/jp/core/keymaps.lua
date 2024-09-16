@@ -60,7 +60,7 @@ map("v", "<leader>/", "gc", { desc = "Toggle comment", remap = true })
 -- NvimTree Mappings
 -- ===========================
 map("n", "<leader>b", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle NvimTree" })
-map("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", { desc = "Focus NvimTree" })
+map("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "Focus NvimTree" })
 
 -- ===========================
 -- Telescope Mappings
