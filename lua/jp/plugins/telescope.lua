@@ -27,6 +27,7 @@ return {
           ["<Esc>"] = require("telescope.actions").close,
         },
       },
+      file_ignore_patterns = { "^assets/" },
     },
     pickers = {},
     extensions = {
