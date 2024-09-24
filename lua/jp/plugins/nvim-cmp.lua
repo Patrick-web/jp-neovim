@@ -1,4 +1,4 @@
-local function border(hl_name)
+local border = function(hl_name)
   return {
     { "╭", hl_name }, -- Top-left corner
     { "─", hl_name }, -- Top border
@@ -10,13 +10,15 @@ local function border(hl_name)
     { "│", hl_name }, -- Left border
   }
 end
+
 vim.api.nvim_set_hl(0, "CmpSel", { bg = "#90CAF9", fg = "#424242" })
+
 return {
   "hrsh7th/nvim-cmp",
   event = "InsertEnter",
   dependencies = {
-    "hrsh7th/cmp-buffer", -- source for text in buffer
-    "hrsh7th/cmp-path", -- source for file system paths
+    "hrsh7th/cmp-buffer", -- Source for text in buffer
+    "hrsh7th/cmp-path", -- Source for file system paths
     {
       "L3MON4D3/LuaSnip",
       version = "v2.*", -- Latest release
@@ -47,7 +49,7 @@ return {
         },
       },
       completion = {
-        completeopt = "menu,menuone,preview,noselect",
+        completeopt = "menu,menuone,preview",
       },
       snippet = {
         expand = function(args)
@@ -66,10 +68,11 @@ return {
         ["<CR>"] = cmp.mapping.confirm { select = false }, -- Confirm selection
       },
       sources = cmp.config.sources {
-        { name = "nvim_lsp" }, -- LSP source
-        { name = "luasnip" }, -- Snippet source
-        { name = "buffer" }, -- Text within current buffer
-        { name = "path" }, -- File system paths
+        { name = "nvim_lsp", priority = 100 }, -- LSP source with highest priority
+        { name = "luasnip", priority = 90 }, -- Snippet source with high priority
+        { name = "friendly-snippets", priority = 85 }, -- Friendly snippets with medium-high priority
+        { name = "buffer", priority = 80 }, -- Text within current buffer with medium priority
+        { name = "path", priority = 70 }, -- File system paths with lower priority
       },
       formatting = {
         format = lspkind.cmp_format {
