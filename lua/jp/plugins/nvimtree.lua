@@ -16,9 +16,9 @@ return {
       -- change folder arrow icons
       renderer = {
         root_folder_label = false,
-        highlight_git = true,
+        highlight_git = false,
         indent_markers = {
-          enable = true,
+          enable = false,
         },
         icons = {
           glyphs = {
@@ -30,7 +30,7 @@ return {
               open = "",
               symlink = "",
             },
-            git = { unmerged = "" },
+            -- git = { unmerged = "" },
           },
         },
       },
