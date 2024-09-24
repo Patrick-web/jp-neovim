@@ -13,9 +13,8 @@ return {
             separator = true,
           },
         },
-        sort_by = "insert_after_current",
-        show_close_icon = false,
-        show_buffer_close_icons = false,
+        show_close_icon = true,
+        show_buffer_close_icons = true,
         themable = true,
         separator_style = "slope",
         tab_separator = {
