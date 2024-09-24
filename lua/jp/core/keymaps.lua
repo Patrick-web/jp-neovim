@@ -3,12 +3,12 @@ local map = vim.keymap.set
 -- ===========================
 -- Insert Mode Mappings
 -- ===========================
-map("i", "<C-b>", "<ESC>^i", { desc = "Move to the beginning of the line" })
-map("i", "<C-e>", "<End>", { desc = "Move to the end of the line" })
-map("i", "<C-h>", "<Left>", { desc = "Move left" })
-map("i", "<C-l>", "<Right>", { desc = "Move right" })
-map("i", "<C-j>", "<Down>", { desc = "Move down" })
-map("i", "<C-k>", "<Up>", { desc = "Move up" })
+-- map("i", "<C-b>", "<ESC>^i", { desc = "Move to the beginning of the line" })
+-- map("i", "<C-e>", "<End>", { desc = "Move to the end of the line" })
+-- map("i", "<C-h>", "<Left>", { desc = "Move left" })
+-- map("i", "<C-l>", "<Right>", { desc = "Move right" })
+-- map("i", "<C-j>", "<Down>", { desc = "Move down" })
+-- map("i", "<C-k>", "<Up>", { desc = "Move up" })
 
 -- ===========================
 -- Normal Mode Mappings
@@ -33,6 +33,13 @@ map("n", "<leader>tf", "<cmd>ToggleTerm direction=float<CR>", { desc = "Toggle f
 map("n", "<leader>th", "<cmd>ToggleTerm direction=horizontal<CR>", { desc = "Toggle horizontal terminal" })
 map("n", "<leader>tv", "<cmd>ToggleTerm direction=vertical<CR>", { desc = "Toggle vertical terminal" })
 
+-- Move Line mappings
+
+map("n", "<C-Down>", ":m .+1<CR>==") -- move line up(n)
+map("n", "<C-Up>", ":m .-2<CR>==") -- move line down(n)
+map("v", "<A-j>", ":m '>+1<CR>gv=gv") -- move line up(v)
+map("v", "<A-k>", ":m '<-2<CR>gv=gv") -- move line down(v)
+
 -- General Commands
 map("n", "<Esc>", "<cmd>noh<CR>", { desc = "Clear highlights" })
 map("n", "<C-s>", "<cmd>w<CR>", { desc = "Save file" })
@@ -48,7 +55,7 @@ end, { desc = "Format file" })
 
 -- Buffer Management
 map("n", "<leader>qq", "<cmd>BufferLineCloseOthers<CR>", { desc = "Close buffer" })
-map("n", "<leader>qo", "<cmd>BufferLineCloseOthers<CR>", { desc = "Close all other buffers" })
+map("n", "<leader>qo", "<cmd>bd<CR>", { desc = "Close all other buffers" })
 map("n", "<tab>", "<cmd>BufferLineCycleNext<CR>", { desc = "Go to next buffer" })
 map("n", "<S-tab>", "<cmd>BufferLineCyclePrev<CR>", { desc = "Go to previous buffer" })
 
@@ -65,17 +72,18 @@ map("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "Focus NvimTree" })
 -- ===========================
 -- Telescope Mappings
 -- ===========================
-map("n", "<leader>f", ":Telescope<CR>", { desc = "Telescope commands" })
+map("n", "<leader>f", "", { desc = "Telescope commands" })
 map("n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { desc = "Telescope live grep" })
 map("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "Telescope find buffers" })
 map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "Telescope help tags" })
-map("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "Telescope find marks" })
+map("n", "<leader>m", "<cmd>Telescope marks<CR>", { desc = "Telescope find marks" })
 map("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "Telescope find old files" })
 map("n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "Telescope find in current buffer" })
 map("n", "<leader>cm", "<cmd>Telescope git_commits<CR>", { desc = "Telescope find git commits" })
 map("n", "<leader>gt", "<cmd>Telescope git_status<CR>", { desc = "Telescope git status" })
 map("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "Telescope pick hidden term" })
--- map("n", "<leader>th", "<cmd>Telescope themes<CR>", { desc = "Telescope NVChad themes" })
+map("n", "<leader>h", "<cmd>Telescope themes<CR>", { desc = "Telescope  themes" })
+map("n", "<leader>tm", "<cmd>Telescope marks<CR>", { desc = "Telescope  marks" })
 map("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Telescope find files" })
 map(
   "n",
