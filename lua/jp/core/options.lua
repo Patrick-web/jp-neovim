@@ -63,9 +63,11 @@ vim.env.PATH = table.concat({ vim.fn.stdpath "data", "mason", "bin" }, sep) .. d
 -- Exit from insert mode by Esc in Terminal
 vim.api.nvim_set_keymap("t", "<Esc>", [[<C-\><C-n>]], { noremap = true, silent = true })
 
+-- Handle command casing mistakes
 vim.api.nvim_create_user_command("Q", "quit", { bang = true, desc = "Quit Neovim" })
 vim.api.nvim_create_user_command("Qa", "qa", { bang = true, desc = "Quit all Neovim windows" })
 vim.api.nvim_create_user_command("W", "write", { bang = true, desc = "Save current buffer" })
 vim.g.mapleader = " "
-
-
+-- Remap {} to scroll half page
+vim.api.nvim_set_keymap("n", "{", "<C-U>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "}", "<C-D>", { noremap = true, silent = true })
