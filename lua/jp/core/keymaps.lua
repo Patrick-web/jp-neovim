@@ -54,8 +54,8 @@ map("n", "<leader>fm", function()
 end, { desc = "Format file" })
 
 -- Buffer Management
-map("n", "<leader>qq", "<cmd>BufferLineCloseOthers<CR>", { desc = "Close buffer" })
-map("n", "<leader>qo", "<cmd>bd<CR>", { desc = "Close all other buffers" })
+map("n", "<leader>qq", "<cmd>BufferLineCloseOthers<CR>", { desc = "Close all other buffer" })
+map("n", "<leader>qo", "<cmd>BD<CR>", { desc = "Close current buffer" })
 map("n", "<tab>", "<cmd>BufferLineCycleNext<CR>", { desc = "Go to next buffer" })
 map("n", "<S-tab>", "<cmd>BufferLineCyclePrev<CR>", { desc = "Go to previous buffer" })
 

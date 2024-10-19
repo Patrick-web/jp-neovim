@@ -71,3 +71,6 @@ vim.g.mapleader = " "
 -- Remap {} to scroll half page
 vim.api.nvim_set_keymap("n", "{", "<C-U>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "}", "<C-D>", { noremap = true, silent = true })
+
+-- Remap 'p' in visual mode to paste and then yank back into the default register
+vim.api.nvim_set_keymap("x", "p", '"_dP', { noremap = true, silent = true })
