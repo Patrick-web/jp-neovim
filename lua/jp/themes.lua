@@ -8,7 +8,7 @@ return {
         gruvbox_material_foreground = "material",
         gruvbox_material_diagnostic_virtual_text = "colored",
         gruvbox_material_ui_contrast = "high",
-        gruvbox_material_transparent_background = true,
+        gruvbox_material_transparent_background = false,
         gruvbox_material_better_performance = true,
       } do
         vim.g[key] = value
@@ -38,9 +38,9 @@ return {
     priority = 1000,
     config = function()
       require("poimandres").setup {
-        disable_background = true,
-        disable_float_background = true,
-        disable_italics = true,
+        disable_background = false,
+        disable_float_background = false,
+        disable_italics = false,
       }
 
       vim.api.nvim_create_autocmd("ColorScheme", {
@@ -59,7 +59,7 @@ return {
       bold_vert_split = false,
       styles = {
         bold = false,
-        transparency = true,
+        transparency = false,
       },
       highlight_groups = {
         WinSeparator = { fg = "overlay" },
@@ -85,7 +85,7 @@ return {
       local border = "#547998"
 
       require("tokyonight").setup {
-        transparent = true,
+        transparent = false,
         styles = { functions = {}, variables = {}, sidebars = "transparent", floats = "transparent" },
         on_highlights = function(highlights, colors)
           highlights.TelescopeSelection = { bg = colors.none }
@@ -118,7 +118,7 @@ return {
         nightflyCursorColor = true,
         nightflyNormalFloat = true,
         nightlflyTerminalColors = true,
-        nightflyTransparent = true,
+        nightflyTransparent = false,
         nightflyUnderCurls = true,
         nightflyUnderlineMatchParen = true,
         nightflyVirtualTextColor = false,
@@ -143,7 +143,7 @@ return {
     opts = {
       no_bold = true,
       no_underline = true,
-      transparent_background = true,
+      transparent_background = false,
       term_colors = true,
       integrations = {
         grug_far = true,
@@ -164,7 +164,7 @@ return {
     priority = 1000,
     config = function()
       require("kanagawa").setup {
-        transparent = true,
+        transparent = false,
         dimInactive = true,
         styles = {
           comments = { italic = true },
@@ -181,7 +181,7 @@ return {
     config = function()
       require("nightfox").setup {
         options = {
-          transparent = true,
+          transparent = false,
           styles = {
             comments = "italic",
             functions = "bold",

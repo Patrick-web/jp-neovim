@@ -8,9 +8,9 @@ return {
       options = {
         auto_open_qflist = true,
         auto_close_qflist = false,
-        auto_focus_qflist = false,
+        auto_focus_qflist = true,
         auto_start_watch_mode = false,
-        use_trouble_qflist = false,
+        use_trouble_qflist = true,
         use_diagnostics = false,
         run_as_monorepo = false,
         -- bin_path = utils.find_tsc_bin(),

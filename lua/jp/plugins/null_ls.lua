@@ -16,7 +16,9 @@ return {
       -- Check if the buffer is NvimTree
       if vim.bo[buffer].filetype == "NvimTree" then
         -- Disable diagnostics for NvimTree
-        client.resolved_capabilities.document_diagnostics = false
+        if client.resolved_capabilities ~= nil then
+          client.resolved_capabilities.document_diagnostics = false
+        end
       end
     end
 

@@ -137,6 +137,10 @@ return {
             "vite.config.ts",
             "vite.config.js"
           ),
+          on_attach = function(client)
+            client.server_capabilities.document_formatting = false
+            client.server_capabilities.document_range_formatting = false
+          end,
           filetypes = { "vue", "javascript", "typescript" },
           init_options = {
             vue = {
@@ -147,6 +151,9 @@ return {
             },
           },
         }
+      end,
+      ["tailwindcss"] = function()
+        require("lspconfig").tailwindcss.setup {}
       end,
     }
   end,

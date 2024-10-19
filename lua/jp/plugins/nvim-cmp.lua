@@ -74,6 +74,12 @@ return {
         { name = "buffer", priority = 80 }, -- Text within current buffer with medium priority
         { name = "path", priority = 70 }, -- File system paths with lower priority
       },
+      -- sources = cmp.config.sources({
+      --   { name = "nvim_lsp" },
+      --   { name = "luasnip" }, -- For luasnip users.
+      -- }, {
+      --   { name = "buffer" },
+      -- }),
       formatting = {
         format = lspkind.cmp_format {
           maxwidth = 50,

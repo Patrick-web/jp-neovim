@@ -13,6 +13,11 @@ return {
         width = 30,
         preserve_window_proportions = true,
       },
+      update_focused_file = {
+        enable = true,
+        update_cwd = false, -- Set to true if you want to update the current working directory
+        ignore_list = {}, -- Add any file patterns to ignore
+      },
       -- change folder arrow icons
       renderer = {
         root_folder_label = false,
