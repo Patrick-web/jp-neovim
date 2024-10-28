@@ -6,6 +6,11 @@ return {
     local bufferline = require "bufferline"
     require("bufferline").setup {
       options = {
+        groups = {
+          items = {
+            bufferline.groups.builtin.pinned:with { icon = "" },
+          },
+        },
         offsets = {
           {
             filetype = "NvimTree",

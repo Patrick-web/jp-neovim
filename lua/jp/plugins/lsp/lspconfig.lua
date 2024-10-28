@@ -153,7 +153,9 @@ return {
         }
       end,
       ["tailwindcss"] = function()
-        require("lspconfig").tailwindcss.setup {}
+        require("lspconfig").tailwindcss.setup {
+          root_dir = lspconfig.util.root_pattern("tailwind.config.js", "tailwind.config.ts"),
+        }
       end,
     }
   end,
